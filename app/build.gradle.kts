@@ -5,8 +5,6 @@ plugins {
 
 val cubismNativeDir = rootProject.file("third_party/cubism-sdk-native")
 val motionSyncDir = rootProject.file("third_party/cubism-sdk-motionsync")
-val motionSyncAppDir =
-    motionSyncDir.resolve("Samples/OpenGL/Demo/proj.android.cmake/MotionSync/app")
 
 android {
     namespace = "com.ondevice.digitalhuman"
@@ -23,15 +21,6 @@ android {
         versionName = "1.0"
         ndk {
             abiFilters += "arm64-v8a"
-        }
-        externalNativeBuild {
-            cmake {
-                arguments(
-                    "-DNATIVE_DIR=${cubismNativeDir.absolutePath}",
-                    "-DSDK_ROOT_PATH=${motionSyncDir.absolutePath}",
-                    "-DCSM_MOTION_DEMO=ON",
-                )
-            }
         }
     }
 
@@ -64,16 +53,12 @@ android {
 
     externalNativeBuild {
         cmake {
-            path = motionSyncAppDir.resolve("CMakeLists.txt")
+            path = file("src/main/cpp/CMakeLists.txt")
             version = "3.22.1"
         }
     }
 
     sourceSets.named("main") {
-        java.directories.add(motionSyncAppDir.resolve("src/main/java").absolutePath)
-        assets.directories.add(
-            cubismNativeDir.resolve("Samples/OpenGL/Shaders/StandardES").absolutePath,
-        )
         assets.directories.add(
             cubismNativeDir.resolve("Framework/src/Rendering/OpenGL/Shaders/StandardES").absolutePath,
         )
