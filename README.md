@@ -35,7 +35,7 @@
 
 本项目使用 Live2D 和 CRI Middleware 实现核心能力。
 
-项目目录 `third_party` 存放下载好的 Live2D SDK：`cubism-sdk-native` 负责绘制，`cubism-sdk-motionsync` 负责口型，其中包含 CRI Middleware。
+`live2d/sdk` 存放下载好的 Live2D SDK：`cubism-sdk-native` 负责绘制，`cubism-sdk-motionsync` 负责口型，其中包含 CRI Middleware。
 
 - 绘制：[Cubism SDK for Native](https://www.live2d.com/zh-CHS/sdk/download/native/)
 - 口型：[Cubism SDK MotionSync Plugin for Native](https://www.live2d.com/zh-CHS/sdk/download/motionsync/)

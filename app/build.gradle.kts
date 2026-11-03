@@ -3,15 +3,11 @@ plugins {
     alias(libs.plugins.compose.compiler)
 }
 
-val cubismNativeDir = rootProject.file("third_party/cubism-sdk-native")
-val motionSyncDir = rootProject.file("third_party/cubism-sdk-motionsync")
-
 android {
     namespace = "com.ondevice.digitalhuman"
     compileSdk {
         version = release(37)
     }
-    ndkVersion = "26.3.11579264"
 
     defaultConfig {
         applicationId = "com.ondevice.digitalhuman"
@@ -45,28 +41,16 @@ android {
 
     packaging {
         jniLibs {
-            // MotionSync opens the CRI engine with dlopen(nativeLibraryDir).
-            // AGP otherwise leaves that directory empty and loads libs from the APK.
+            // MotionSync 用 dlopen(nativeLibraryDir) 打开 CRI 引擎。
+            // 不打开这项时，该目录是空的，口型引擎装不上。
             useLegacyPackaging = true
         }
-    }
-
-    externalNativeBuild {
-        cmake {
-            path = file("src/main/cpp/CMakeLists.txt")
-            version = "3.22.1"
-        }
-    }
-
-    sourceSets.named("main") {
-        assets.directories.add(
-            cubismNativeDir.resolve("Framework/src/Rendering/OpenGL/Shaders/StandardES").absolutePath,
-        )
-        jniLibs.directories.add(motionSyncDir.resolve("Core/CRI/dll/Android").absolutePath)
     }
 }
 
 dependencies {
+    implementation(project(":live2d"))
+
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
 

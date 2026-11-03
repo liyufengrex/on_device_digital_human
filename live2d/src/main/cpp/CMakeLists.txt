@@ -3,9 +3,9 @@ project(Demo)
 
 set(APP_NAME Demo)
 
-get_filename_component(REPO_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/../../../.." ABSOLUTE)
-set(NATIVE_DIR "${REPO_ROOT}/third_party/cubism-sdk-native")
-set(SDK_ROOT_PATH "${REPO_ROOT}/third_party/cubism-sdk-motionsync")
+get_filename_component(LIVE2D_DIR "${CMAKE_CURRENT_SOURCE_DIR}/../../.." ABSOLUTE)
+set(NATIVE_DIR "${LIVE2D_DIR}/sdk/cubism-sdk-native")
+set(SDK_ROOT_PATH "${LIVE2D_DIR}/sdk/cubism-sdk-motionsync")
 set(NATIVE_PATH "${NATIVE_DIR}" CACHE PATH "Cubism Native SDK" FORCE)
 
 set(NATIVE_CORE_PATH "${NATIVE_DIR}/Core")

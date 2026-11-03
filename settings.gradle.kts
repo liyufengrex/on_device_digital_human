@@ -26,3 +26,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "OnDeviceDigitalHuman"
 include(":app")
+include(":live2d")
