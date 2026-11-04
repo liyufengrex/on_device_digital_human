@@ -109,6 +109,8 @@ void LAppMotionSyncLinkDelegate::OnSurfaceCreate()
 
     //Initialize cubism
     CubismFramework::Initialize();
+    // 新的 GL 上下文里，旧贴图已经失效，下一帧必须重新加载模型。
+    _recreateModel = true;
 }
 
 void LAppMotionSyncLinkDelegate::OnSurfaceChanged(float width, float height)
@@ -117,8 +119,22 @@ void LAppMotionSyncLinkDelegate::OnSurfaceChanged(float width, float height)
     _width = width;
     _height = height;
 
-    // 数字人だけを初期化する。再生とモデル切替は画面側から要求する。
-    _view->Initialize();
+    // 权限弹窗恢复时上下文还在，只更新视口，不重新 LoadModel。
+    // 上下文真丢了，或模型还没建，才重新加载。
+    if (_view)
+    {
+        LAppMotionSyncLinkModel* model = _view->GetCurrentModel();
+        const bool modelReady = model != NULL && model->GetModel() != NULL;
+        if (_recreateModel || !modelReady)
+        {
+            if (!CubismFramework::IsInitialized())
+            {
+                CubismFramework::Initialize();
+            }
+            _view->Initialize();
+        }
+    }
+    _recreateModel = false;
 
     _isActive = true;
 }
@@ -131,6 +147,7 @@ LAppMotionSyncLinkDelegate::LAppMotionSyncLinkDelegate():
         _height(0),
         _captured(false),
         _isActive(true),
+        _recreateModel(true),
         _mouseY(0.0f),
         _mouseX(0.0f)
 {

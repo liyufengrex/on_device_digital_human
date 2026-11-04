@@ -192,6 +192,8 @@ fun Live2DView(
             JniBridgeJava.setModelLoadedListener { controller.dispatchLoaded() }
             GLSurfaceView(viewContext).apply {
                 setEGLContextClientVersion(2)
+                // 权限弹窗只会暂停页面。保留上下文后，恢复时不会重建 EGL，模型不用重新加载。
+                setPreserveEGLContextOnPause(true)
                 setRenderer(GLRenderer())
                 renderMode = GLSurfaceView.RENDERMODE_CONTINUOUSLY
                 controller.attach(this)

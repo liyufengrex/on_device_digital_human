@@ -141,6 +141,7 @@ private:
     int _height;                                 ///< windowの高さ
     bool _captured;                              ///< クリックしているか
     bool _isActive;                              ///< アプリがアクティブ状態なのか
+    bool _recreateModel;                         ///< GL 上下文新建后才重新加载模型
     float _mouseY;                               ///< マウスY座標
     float _mouseX;                               ///< マウスX座標
 };
